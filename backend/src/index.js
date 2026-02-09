@@ -15,11 +15,12 @@ const PORT = process.env.PORT // set port
 
 app.use(express.json()) // for parsing application/json
 app.use(cookieParser()) // for parsing cookies
-app.use(cors({            // for cross-origin resource sharing
-    origin: "http://localhost:5173", // allow requests from client url
-    credentials: true, // allow credentials (cookies) to be sent
+app.use(cors({
+    origin: ["http://localhost:5173", "http://localhost:5174"],
+    credentials: true,
 })
 )
+
 
 app.use("/api/auth", authRoutes)    // for auth routes
 app.use("/api/messages", messageRoutes)    // for message routes
