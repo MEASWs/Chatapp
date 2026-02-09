@@ -3,7 +3,7 @@ import { axiosInstance } from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 
-const BASE_URL = "http://localhost:5001";
+const BASE_URL = import.meta.env.VITE_API_URL?.replace("/api", "") || "http://localhost:5001";
 
 export const useAuthStore = create((set, get) => ({
     authUser: null,
@@ -36,12 +36,12 @@ export const useAuthStore = create((set, get) => ({
             set({ authUser: res.data });
             toast.success("Account created successfully");
             get().connectSocket();
-        }catch (error) {
+        } catch (error) {
             console.log("Signup error:", error);
             toast.error(
                 error.response?.data?.message || "Signup failed"
             );
-        }finally {
+        } finally {
             set({ isSigningUp: false });
         }
     },
@@ -54,12 +54,12 @@ export const useAuthStore = create((set, get) => ({
             toast.success("Logged in successfully");
 
             get().connectSocket();
-        }catch (error) {
+        } catch (error) {
             console.log("Login error:", error);
             toast.error(
                 error.response?.data?.message || "Login failed"
             );
-        }finally {
+        } finally {
             set({ isLoggingIn: false });
         }
     },
@@ -70,7 +70,7 @@ export const useAuthStore = create((set, get) => ({
             set({ authUser: null });
             toast.success("Logged out successfully");
             get().disconnectSocket();
-        }catch (error) {
+        } catch (error) {
             toast.error(
                 error.response?.data?.message || "Logout failed"
             );
@@ -84,13 +84,13 @@ export const useAuthStore = create((set, get) => ({
             const res = await axiosInstance.put("/auth/update-profile", data);
             set({ authUser: res.data });
             toast.success("Profile updated successfully");
-        }catch (error) {
+        } catch (error) {
             console.log("error in update profile:", error);
             toast.error(
                 error.response?.data?.message || "Update profile failed"
             );
         }
- finally {
+        finally {
             set({ isUpdatingProfile: false });
         }
     },
