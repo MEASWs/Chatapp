@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import User from '../models/user.model.js'; // Ensure the correct path to your User model
 import { generateToken } from '../lib/utils.js';
 import cloudinary from '../lib/cloudinary.js';
